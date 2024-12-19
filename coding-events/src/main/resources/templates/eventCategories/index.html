@@ -1,21 +1,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
 
 <header th:replace="fragments :: header"></header>
 
-<p th:unless="${events} and ${events.size()}">No Events!</p>
+<p th:unless="${eventCategories} and ${eventCategories.size()}">No Categories!</p>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Category Name</th>
         </tr>
     </thead>
-    <tr th:each="event : ${events}">
-        <td><a th:text="${event.name}"th:href="'/events/detail?eventId=' + ${event.id}"></a></td>
+    <tr th:each="category : ${eventCategories}">
+        <td><a th:text="${category.name}" th:href="'/events?categoryId=' + ${category.id}"></a></td>
     </tr>
 </table>
 
