@@ -1,11 +1,13 @@
 package ro.utcluj.coding_events.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Event extends AbstractEntity {
@@ -14,21 +16,20 @@ public class Event extends AbstractEntity {
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters!")
     private String name;
 
-    @Size(max = 500, message = "Description too long!")
-    private String description;
-
-    @NotBlank(message = "Email is required!")
-    @Email(message = "Invalid email. Try again!")
-    private String contactEmail;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
 
     @ManyToOne
     @NotNull(message = "Category is required!")
     private EventCategory category;
 
-    public Event(String name, String description, String contactEmail, EventCategory category) {
+    @ManyToMany
+    private final List<Tag> tags = new ArrayList<>();
+
+    public Event(String name, EventCategory category) {
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
         this.category = category;
     }
 
@@ -42,20 +43,12 @@ public class Event extends AbstractEntity {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
 
     public EventCategory getCategory(){
@@ -64,6 +57,14 @@ public class Event extends AbstractEntity {
 
     public void setCategory(EventCategory category) {
         this.category = category;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void addTag(Tag tag){
+        tags.add(tag);
     }
 
     @Override

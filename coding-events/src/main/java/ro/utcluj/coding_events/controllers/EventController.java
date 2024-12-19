@@ -8,8 +8,11 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ro.utcluj.coding_events.data.EventCategoryRepository;
 import ro.utcluj.coding_events.data.EventRepository;
+import ro.utcluj.coding_events.data.TagRepository;
 import ro.utcluj.coding_events.models.Event;
 import ro.utcluj.coding_events.models.EventCategory;
+import ro.utcluj.coding_events.models.Tag;
+import ro.utcluj.coding_events.models.dto.TagDTO;
 
 import java.util.Optional;
 
@@ -22,6 +25,9 @@ public class EventController {
 
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @GetMapping
     public String displayAllEvents(@RequestParam(required = false) Integer categoryId, Model model){
@@ -43,6 +49,33 @@ public class EventController {
         }
 
         return "events/index";
+    }
+
+    @GetMapping("detail")
+    public String displayEventDetails(@RequestParam(required = false) Integer eventId, Model model){
+        if(eventId == null){
+            model.addAttribute("title", "All Events");
+            model.addAttribute("events", eventRepository.findAll());
+
+            return "redirect:/events";
+        }
+        else {
+            Optional<Event> result = eventRepository.findById(eventId);
+
+            if (result.isEmpty()) {
+                model.addAttribute("title", "All Events");
+                model.addAttribute("events", eventRepository.findAll());
+
+                return "redirect:/events";
+            } else {
+                Event event = result.get();
+                model.addAttribute("title", event.getName() + " details");
+                model.addAttribute("event", event);
+                model.addAttribute("tags", event.getTags());
+            }
+        }
+
+        return "events/detail";
     }
 
     // /events/create
@@ -83,5 +116,53 @@ public class EventController {
         }
 
         return "redirect:/events";
+    }
+
+    @GetMapping("add-tag")
+    public String displayAddTagForm(@RequestParam(required = false) Integer eventId, Model model) {
+        if(eventId == null){
+            model.addAttribute("title", "All Events");
+            model.addAttribute("events", eventRepository.findAll());
+
+            return "redirect:/events";
+        }
+        else{
+            Optional<Event> result = eventRepository.findById(eventId);
+            if(result.isEmpty()){
+                model.addAttribute("title", "All Events");
+                model.addAttribute("events", eventRepository.findAll());
+
+                return "redirect:/events";
+            }
+            else{
+                Event event = result.get();
+                model.addAttribute("title", "Add Tag to " + event.getName());
+                model.addAttribute("tags", tagRepository.findAll());
+                model.addAttribute("event", event);
+                TagDTO eventTag = new TagDTO();
+                eventTag.setEvent(event);
+                model.addAttribute("eventTag", eventTag);
+            }
+        }
+
+        return "events/add-tag";
+    }
+
+    @PostMapping("add-tag")
+    public String processAddTagForm(@ModelAttribute @Valid TagDTO eventTag, Errors errors, Model model) {
+        if(!errors.hasErrors()){
+            Event event = eventTag.getEvent();
+            Tag tag = eventTag.getTag();
+            System.out.println("not asd\n");
+            if(!event.getTags().contains(tag)){
+                event.addTag(tag);
+                eventRepository.save(event);
+            }
+
+            return "redirect:detail?eventId=" + event.getId();
+        }
+        System.out.println("asd\n");
+
+        return "redirect:add-tag";
     }
 }
