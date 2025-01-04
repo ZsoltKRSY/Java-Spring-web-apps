@@ -4,17 +4,13 @@ import ro.utcluj.demo.dto.UserDto;
 import ro.utcluj.demo.mapper.RoleMapper;
 import ro.utcluj.demo.mapper.UserMapper;
 import ro.utcluj.demo.model.RegistrationRequest;
-import ro.utcluj.demo.model.Role;
 import ro.utcluj.demo.model.User;
 import ro.utcluj.demo.repository.RoleRepository;
 import ro.utcluj.demo.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
