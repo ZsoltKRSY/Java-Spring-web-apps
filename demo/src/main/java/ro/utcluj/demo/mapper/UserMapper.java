@@ -24,7 +24,7 @@ public class UserMapper {
 
     public List<UserDto> userListEntityToDto(List<User> users){
         return users.stream()
-                .map(user -> userEntityToDto(user))
+                .map(this::userEntityToDto)
                 .toList();
     }
 
