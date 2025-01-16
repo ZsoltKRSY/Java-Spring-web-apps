@@ -41,7 +41,7 @@ public class UserController {
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("user", new RegistrationRequest());
 
-        return "/add-user";
+        return "add-user";
     }
 
     @PostMapping("users/createUser")
