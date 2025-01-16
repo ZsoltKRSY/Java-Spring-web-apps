@@ -9,8 +9,17 @@
 <div th:replace="~{fragments :: header}"></div>
 
 <div class="body">
-    <h1>Authorities</h1>
-    <div th:replace="~{fragments :: roles_table}"></div>
+    <h1 th:text="${title}"></h1>
+    <div>
+        <table>
+            <tr>
+                <th>Authority</th>
+            </tr>
+            <tr th:each="role : ${roles}">
+                <td th:text="${role.role}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <div th:replace="~{fragments :: footer}"></div>

@@ -17,4 +17,9 @@ public class Role {
     @NonNull
     @Column(unique = true)
     private String role;
+
+    @Override
+    public String toString(){
+        return role;
+    }
 }

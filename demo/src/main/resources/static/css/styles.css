@@ -42,3 +42,19 @@ th, td{
 .test {
     background-color: blue;
 }
+
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+    background-color: #c9c9c9;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.button-link:hover {
+    background-color: #acdcf2;
+}

@@ -3,6 +3,8 @@ package ro.utcluj.demo.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.validation.Valid;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,10 +14,9 @@ import lombok.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NonNull
-    @Column(unique = true)
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

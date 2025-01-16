@@ -17,4 +17,9 @@ public class Category {
     @NonNull
     @Column(unique = true)
     private String category;
+
+    @Override
+    public String toString(){
+        return category;
+    }
 }

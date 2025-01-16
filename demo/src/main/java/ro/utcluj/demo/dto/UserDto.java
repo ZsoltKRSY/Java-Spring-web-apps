@@ -6,7 +6,7 @@ import java.util.List;
 @Builder
 public record UserDto(
         String username,
-        List<RoleDto> roles,
+        List<String> roles,
         String firstName,
         String lastName,
         String emailAddress) {}
