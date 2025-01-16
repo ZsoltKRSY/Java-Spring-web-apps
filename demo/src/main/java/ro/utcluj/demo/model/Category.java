@@ -8,18 +8,18 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "ROLES")
-public class Role {
+@Table(name = "CATEGORIES")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NonNull
     @Column(unique = true)
-    private String role;
+    private String category;
 
     @Override
     public String toString(){
-        return role;
+        return category;
     }
 }

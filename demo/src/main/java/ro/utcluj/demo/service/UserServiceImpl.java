@@ -4,6 +4,7 @@ import ro.utcluj.demo.dto.UserDto;
 import ro.utcluj.demo.mapper.RoleMapper;
 import ro.utcluj.demo.mapper.UserMapper;
 import ro.utcluj.demo.model.RegistrationRequest;
+import ro.utcluj.demo.model.Role;
 import ro.utcluj.demo.model.User;
 import ro.utcluj.demo.repository.RoleRepository;
 import ro.utcluj.demo.repository.UserRepository;
@@ -11,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +28,6 @@ public class UserServiceImpl implements UserService{
 
     private final RoleRepository roleRepository;
 
-    private final RoleMapper roleMapper;
-
     @Override
     public boolean checkEmail(String email) {
         return userRepository.existsByEmailAddress(email);
@@ -34,13 +35,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto registerUser(RegistrationRequest registrationRequest) {
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleRepository.findByRole(registrationRequest.getRole()));
+
         User user = User.builder()
                 .username(registrationRequest.getUsername())
                 .firstName(registrationRequest.getFirstName())
                 .lastName(registrationRequest.getLastName())
                 .password(registrationRequest.getPassword())
                 .emailAddress(registrationRequest.getEmailAddress())
-                .role((roleRepository.findByRole("USER")))
+                .roles(userRoles)
                 .build();
         return this.createUser(user);
     }
@@ -59,14 +63,23 @@ public class UserServiceImpl implements UserService{
 
     public UserDto createUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userMapper.userEntityToDto(userRepository.save(user));
+
+        try {
+            return userMapper.userEntityToDto(userRepository.save(user));
+        }
+        catch(Exception ex){
+            return null;
+        }
     }
 
     public UserDto updateUser(User user){
         return userMapper.userEntityToDto(userRepository.save(user));
     }
 
-    public void deleteUser(User user){
-        userRepository.delete(user);
+    public void deleteUserByUsername(String username){
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent())
+            System.out.println(user);
+        user.ifPresent(userRepository::delete);
     }
 }

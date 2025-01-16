@@ -16,7 +16,7 @@ public class RoleMapper {
 
     public List<RoleDto> roleListEntityToDto(List<Role> roles){
         return roles.stream()
-                .map(role -> roleEntityToDto(role))
+                .map(this::roleEntityToDto)
                 .toList();
     }
 
@@ -28,7 +28,7 @@ public class RoleMapper {
 
     public List<Role> roleListDtoToEntity(List<RoleDto> roleDtos){
         return roleDtos.stream()
-                .map(roleDto -> roleDtoToEntity(roleDto))
+                .map(this::roleDtoToEntity)
                 .toList();
     }
 }

@@ -58,10 +58,15 @@ public class HomeController {
 
     @PostMapping("/createUser")
     public String createUser(@ModelAttribute("user") RegistrationRequest registrationRequest, RedirectAttributes redirectAttributes){
-
+        registrationRequest.setRole("USER");
         UserDto userDto = userService.registerUser(registrationRequest);
 
-        redirectAttributes.addAttribute("registrationSuccess", "Success");
+        if(userDto != null) {
+            redirectAttributes.addAttribute("registrationSuccess", "Success");
+        }
+        else{
+            redirectAttributes.addAttribute("registrationSuccess", "Failed");
+        }
 
         return "redirect:/register";
     }
