@@ -34,7 +34,7 @@ public class ProductController {
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("product", new Product());
 
-        return "/add-product";
+        return "add-product";
     }
 
     @PostMapping("/products/createProduct")
@@ -59,7 +59,7 @@ public class ProductController {
         model.addAttribute("oldProduct", productService.getProductById(id));
         model.addAttribute("newProduct", new Product());
 
-        return "/update-product";
+        return "update-product";
     }
 
     @PostMapping("/products/updateProduct/{id}")
