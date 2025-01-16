@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ro.utcluj.demo.dto.UserDto;
 import ro.utcluj.demo.model.RegistrationRequest;
-import ro.utcluj.demo.model.User;
 import ro.utcluj.demo.service.RoleService;
 import ro.utcluj.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,17 +34,17 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/users/add-user")
+    @GetMapping("/add-user")
     public String addUser(@RequestParam(value="addUserSuccess", required = false) String success, Model model){
         model.addAttribute("title", "Add new User");
         model.addAttribute("addUserSuccess", success);
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("user", new RegistrationRequest());
 
-        return "/users/add-user";
+        return "/add-user";
     }
 
-    @PostMapping("/users/createUser")
+    @PostMapping("users/createUser")
     public String createUser(@ModelAttribute("user") RegistrationRequest registrationRequest, RedirectAttributes redirectAttributes){
         System.out.println(registrationRequest);
         UserDto userDto = userService.registerUser(registrationRequest);
@@ -57,10 +56,10 @@ public class UserController {
             redirectAttributes.addAttribute("addUserSuccess", "Failed");
         }
 
-        return "redirect:/users/add-user";
+        return "redirect:/add-user";
     }
 
-    @PostMapping("/users/delete-user/{username}")
+    @PostMapping("/delete-user/{username}")
     public String deleteUserByUsername(@PathVariable (required = true) String username){
         userService.deleteUserByUsername(username);
 
