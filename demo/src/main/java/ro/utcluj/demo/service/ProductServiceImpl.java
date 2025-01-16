@@ -2,14 +2,12 @@ package ro.utcluj.demo.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import ro.utcluj.demo.dto.ProductDto;
 import ro.utcluj.demo.mapper.ProductMapper;
 import ro.utcluj.demo.model.Product;
 import ro.utcluj.demo.repository.CategoryRepository;
 import ro.utcluj.demo.repository.ProductRepository;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service

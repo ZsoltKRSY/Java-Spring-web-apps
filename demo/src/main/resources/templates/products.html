@@ -34,8 +34,12 @@
                     <td th:text="${product.price}"></td>
                     <td th:text="${product.stock}"></td>
                     <td>
-                        <form method="post" th:action="@{'/products/delete-product/' + ${product.id}}">
+                        <form method="post" th:action="@{'/products/delete-product/' + ${product.id}}" style="display: inline-block;">
                             <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+                        <form method="get" th:action="@{'/products/update-product/' + ${product.id}}" style="display: inline-block;">
+                            <button type="submit" class="btn btn-primary">Modify</button>
                         </form>
                     </td>
                 </tr>

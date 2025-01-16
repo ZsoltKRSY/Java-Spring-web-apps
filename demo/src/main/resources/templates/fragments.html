@@ -15,8 +15,8 @@
         <a class="header" href="/logout"><span sec:authorize="isAuthenticated()">Logout</span></a>
         <a class="header" href="/"><span sec:authorize="isAuthenticated()">Home</span></a>
         <a class="header" href="/products"><span sec:authorize="isAuthenticated()">Products</span></a>
-        <a class="header" href="/users"><span sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Users</span></a>
-        <a class="header" href="/roles"><span sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Roles</span></a>
+        <a class="header" href="/users"><span sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('DEVELOPER'))">Users</span></a>
+        <a class="header" href="/roles"><span sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('DEVELOPER'))">Roles</span></a>
     </p>
     <p></p>
 </div>

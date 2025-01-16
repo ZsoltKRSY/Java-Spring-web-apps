@@ -6,9 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ro.utcluj.demo.dto.ProductDto;
-import ro.utcluj.demo.dto.UserDto;
 import ro.utcluj.demo.model.Product;
-import ro.utcluj.demo.model.RegistrationRequest;
 import ro.utcluj.demo.service.CategoryService;
 import ro.utcluj.demo.service.ProductService;
 
@@ -41,10 +39,8 @@ public class ProductController {
 
     @PostMapping("/products/createProduct")
     public String createProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes){
-        System.out.println(product);
         ProductDto productDto = productService.addProduct(product);
 
-        System.out.println(productDto);
         if(productDto != null) {
             redirectAttributes.addAttribute("productAddSuccess", "Success");
         }
@@ -53,6 +49,34 @@ public class ProductController {
         }
 
         return "redirect:/products/add-product";
+    }
+
+    @GetMapping("/products/update-product/{id}")
+    public String modifyProduct(@RequestParam(value="productUpdateSuccess", required = false) String success, Model model, @PathVariable (required = true) Integer id){
+        model.addAttribute("title", "Modify Product with ID=" + id);
+        model.addAttribute("productUpdateSuccess", success);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("oldProduct", productService.getProductById(id));
+        model.addAttribute("newProduct", new Product());
+
+        return "/products/update-product";
+    }
+
+    @PostMapping("/products/updateProduct")
+    public String updateProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes){
+        ProductDto productDto = productService.updateProduct(product);
+        int id = -1;
+
+        System.out.println(productDto);
+        if(productDto != null) {
+            redirectAttributes.addAttribute("productUpdateSuccess", "Success");
+            id = productDto.id();
+        }
+        else{
+            redirectAttributes.addAttribute("productUpdateSuccess", "Failed");
+        }
+
+        return "redirect:/products/update-product/" + id;
     }
 
     @PostMapping("/products/delete-product/{id}")
