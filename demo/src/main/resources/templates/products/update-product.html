@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+<div th:replace="~{fragments :: header}"></div>
+
+<div class="body">
+    <h1 th:text="${title}"></h1>
+
+    <div th:switch="${productUpdateSuccess}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong>Success!</strong> Product modified successfully.
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong>Failure!</strong> Operation failed. Please try again!
+        </div>
+    </div>
+
+    <form th:action="@{/products/updateProduct}" method="post" class="px-4">
+        <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Product name</label>
+            <div class="col-sm-6">
+                <input type="text"  id="name" autofocus="autofocus"
+                       th:placeholder="${newProduct.name != null ? newProduct.name : oldProduct.name}"
+                       class="form-control" required name="name" th:field="${newProduct.name}" >
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="price" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-6">
+                <input type="number"  id="price" autofocus="autofocus"
+                       th:placeholder="${newProduct.price != null ? newProduct.price : oldProduct.price}"
+                       class="form-control" required name="price" th:field="${newProduct.price}" >
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+            <div class="col-sm-6">
+                <input type="number"  id="stock" autofocus="autofocus"
+                       th:placeholder="${newProduct.stock != null ? newProduct.stock : oldProduct.stock}"
+                       class="form-control" required name="stock" th:field="${newProduct.stock}" >
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="category" class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-6">
+                <select id="category" th:field="${newProduct.category}">
+                    <option th:each="categ : ${categories}"
+                            th:value="${categ.id}"
+                            th:text="${categ.category}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Save modifications</button>
+        </div>
+    </form>
+
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>
