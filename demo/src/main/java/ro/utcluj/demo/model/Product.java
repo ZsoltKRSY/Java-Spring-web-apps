@@ -3,8 +3,6 @@ package ro.utcluj.demo.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.validation.Valid;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
