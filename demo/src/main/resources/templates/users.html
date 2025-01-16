@@ -11,7 +11,7 @@
 <div class="body">
     <h1 th:text="${title}"></h1>
     <div>
-        <a href="/users/add-user" class="button-link"><span>Add new User</span></a>
+        <a href="/add-user" class="button-link"><span>Add new User</span></a>
     </div>
 
     <div>
@@ -34,7 +34,7 @@
                     <td th:text="${user.emailAddress}"></td>
                     <td th:text="${#strings.listJoin(user.roles, ', ')}"></td>
                     <td>
-                        <form method="post" th:action="@{'/users/delete-user/' + ${user.username}}">
+                        <form method="post" th:action="@{'/delete-user/' + ${user.username}}">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>

@@ -27,14 +27,14 @@ public class ProductController {
         return "products";
     }
 
-    @GetMapping("/products/add-product")
+    @GetMapping("/add-product")
     public String addProduct(@RequestParam(value="productAddSuccess", required = false) String success, Model model){
         model.addAttribute("title", "Add new Product");
         model.addAttribute("productAddSuccess", success);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("product", new Product());
 
-        return "/products/add-product";
+        return "/add-product";
     }
 
     @PostMapping("/products/createProduct")
@@ -48,10 +48,10 @@ public class ProductController {
             redirectAttributes.addAttribute("productAddSuccess", "Failed");
         }
 
-        return "redirect:/products/add-product";
+        return "redirect:/add-product";
     }
 
-    @GetMapping("/products/update-product/{id}")
+    @GetMapping("/update-product/{id}")
     public String modifyProduct(@RequestParam(value="productUpdateSuccess", required = false) String success, Model model, @PathVariable (required = true) Integer id){
         model.addAttribute("title", "Modify Product with ID=" + id);
         model.addAttribute("productUpdateSuccess", success);
@@ -59,27 +59,25 @@ public class ProductController {
         model.addAttribute("oldProduct", productService.getProductById(id));
         model.addAttribute("newProduct", new Product());
 
-        return "/products/update-product";
+        return "/update-product";
     }
 
-    @PostMapping("/products/updateProduct")
-    public String updateProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes){
+    @PostMapping("/products/updateProduct/{id}")
+    public String updateProduct(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes,  @PathVariable (required = true) Integer id){
+        product.setId(id);
         ProductDto productDto = productService.updateProduct(product);
-        int id = -1;
 
-        System.out.println(productDto);
         if(productDto != null) {
             redirectAttributes.addAttribute("productUpdateSuccess", "Success");
-            id = productDto.id();
         }
         else{
             redirectAttributes.addAttribute("productUpdateSuccess", "Failed");
         }
 
-        return "redirect:/products/update-product/" + id;
+        return "redirect:/update-product/" + id;
     }
 
-    @PostMapping("/products/delete-product/{id}")
+    @PostMapping("/delete-product/{id}")
     public String deleteUserByUsername(@PathVariable (required = true) Integer id){
         productService.deleteProductById(id);
 
