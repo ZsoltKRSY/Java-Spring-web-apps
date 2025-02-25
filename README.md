@@ -1,4 +1,4 @@
-# Java-Spring-stuff
+# Java Spring apps
 ## Description
 Demo applications written in Java and HTML using Spring Boot. Data persistence in MySQL.\
 Final deployed application under *demo* (online shop). Admin, developer and user roles. Functionalities to register, login and CRUD on products and users.\
