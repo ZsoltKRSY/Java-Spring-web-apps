@@ -4,7 +4,7 @@ Demo applications written in Java and HTML using Spring Boot. Data persistence i
 Final deployed application under *demo* (online shop). Admin, developer and user roles. Functionalities to register, login and CRUD on products and users.\
   https://products-sale-production.up.railway.app
 
-## Technologies used
+## Technical
 - OOP principles
 - SOLID principles
 - Layers architecture
