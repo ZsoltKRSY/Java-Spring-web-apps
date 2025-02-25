@@ -5,6 +5,7 @@ Final deployed application under *demo* (online shop). Admin, developer and user
   https://products-sale-production.up.railway.app
 
 ## Technical
+Architectures, frameworks and design patterns used:
 - OOP principles
 - SOLID principles
 - Layers architecture
