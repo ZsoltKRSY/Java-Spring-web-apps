@@ -1,7 +1,7 @@
 # Java-Spring-stuff
 ## Description
-Demo applications written in Java and HTML using Spring Boot. Data persistence in MySQL.
-Final deployed application under *demo* (online shop). Admin, developer and user roles. Functionalities to register, login and add, delete and modify products and users.
+Demo applications written in Java and HTML using Spring Boot. Data persistence in MySQL.\
+Final deployed application under *demo* (online shop). Admin, developer and user roles. Functionalities to register, login and CRUD on products and users.\
   https://products-sale-production.up.railway.app
 
 ## Technologies used
